@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:groceryapp/model/cart.dart';
 import 'package:groceryapp/model/data.dart';
@@ -159,8 +160,30 @@ class _ItemViewState extends State<ItemView> {
                         if (count > 0) {
                           provider
                               .addItem(CartItems(item: item, amount: price));
+                          Navigator.pop(context);
+                        } else {
+                          Flushbar(
+                            title: "Sorry",
+                            message: "Empty Items",
+                            duration: Duration(seconds: 2),
+                            flushbarPosition: FlushbarPosition.TOP,
+                            flushbarStyle: FlushbarStyle.FLOATING,
+                            reverseAnimationCurve: Curves.decelerate,
+                            forwardAnimationCurve: Curves.elasticOut,
+                            backgroundColor: Colors.grey.withOpacity(0.3),
+                            icon: Icon(
+                              Icons.warning,
+                              color: Colors.amber,
+                            ),
+                            boxShadows: [
+                              BoxShadow(
+                                  color: Colors.grey[800],
+                                  offset: Offset(0.0, 2.0),
+                                  blurRadius: 5.0)
+                            ],
+                            leftBarIndicatorColor: Colors.red,
+                          )..show(context);
                         }
-                        print("success");
                       },
                       child: Container(
                         height: width * 0.1,

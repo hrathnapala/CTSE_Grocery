@@ -4,6 +4,7 @@ import 'package:groceryapp/model/cart.dart';
 class CartProvider extends ChangeNotifier {
   List<CartItems> _items = [];
   int amount = 0;
+  bool isCompleted = false;
 
   void addItem(CartItems item) => {
         _items.add(item),
@@ -18,6 +19,11 @@ class CartProvider extends ChangeNotifier {
         _items = [],
         notifyListeners(),
       };
+  void toggleComplete() => {
+        isCompleted = !isCompleted,
+        notifyListeners(),
+      };
+  bool isCheck() => isCompleted;
   // int getAmount() {
   //   _items.map((e) => amount = e.amount + 1);
   //   notifyListeners();

@@ -11,13 +11,12 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
-  bool isCompleted = false;
-
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<CartProvider>(context);
     List<CartItems> cart = provider.getItems();
     final width = MediaQuery.of(context).size.width;
+    bool isCompleted = provider.isCheck();
 
     return Scaffold(
       // bottomNavigationBar: Container(
@@ -50,9 +49,7 @@ class _CartState extends State<Cart> {
                   padding: const EdgeInsets.all(16.0),
                   child: GestureDetector(
                     onTap: () {
-                      setState(() {
-                        isCompleted = !isCompleted;
-                      });
+                      provider.toggleComplete();
                     },
                     child: Container(
                       width: double.infinity,
