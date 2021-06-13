@@ -16,7 +16,6 @@ class _CartState extends State<Cart> {
     final provider = Provider.of<CartProvider>(context);
     List<CartItems> cart = provider.getItems();
     final width = MediaQuery.of(context).size.width;
-    bool isCompleted = provider.isCheck();
 
     return Scaffold(
       // bottomNavigationBar: Container(
@@ -49,12 +48,12 @@ class _CartState extends State<Cart> {
                   padding: const EdgeInsets.all(16.0),
                   child: GestureDetector(
                     onTap: () {
-                      provider.toggleComplete();
+                      provider.toggleComplete(cart[count]);
                     },
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: isCompleted
+                        color: cart[count].isCompleted
                             ? Colors.red.withOpacity(0.5)
                             : Colors.grey.withOpacity(0.3),
                         borderRadius: BorderRadius.circular(10.0),
@@ -85,7 +84,7 @@ class _CartState extends State<Cart> {
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: width * 0.05,
-                                    decoration: isCompleted
+                                    decoration: cart[count].isCompleted
                                         ? TextDecoration.lineThrough
                                         : TextDecoration.none),
                               ),
@@ -93,7 +92,7 @@ class _CartState extends State<Cart> {
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: width * 0.035,
-                                      decoration: isCompleted
+                                      decoration: cart[count].isCompleted
                                           ? TextDecoration.lineThrough
                                           : TextDecoration.none)),
                             ],
