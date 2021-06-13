@@ -51,20 +51,58 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               Padding(
                 padding: EdgeInsets.all(10.0),
                 child: Container(
-                    width: 30.0,
-                    height: 30.0,
-                    decoration: BoxDecoration(
-                        color: Colors.grey[800],
-                        borderRadius: BorderRadius.circular(8)),
+                    width: 50.0,
+                    height: 50.0,
+                    // decoration: BoxDecoration(
+                    //     color: Colors.grey[800],
+                    //     borderRadius: BorderRadius.circular(8)),
                     child: InkWell(
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) => Cart()));
                       },
-                      child: Center(
-                        child: Text(provider.getItems().length == 0
-                            ? "0"
-                            : provider.getItems().length.toString()),
+                      // child: Center(
+                      //   child: Text(provider.getItems().length == 0
+                      //       ? "0"
+                      //       : provider.getItems().length.toString()),
+                      // ),
+                      child: Stack(
+                        children: [
+                          Positioned(
+                              left: 10,
+                              top: 10,
+                              child: Icon(Icons.shopping_cart)),
+                          Positioned(
+                            right: 5,
+                            bottom: 13,
+                            child: Container(
+                              height: 20,
+                              width: 20,
+                              decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(20.0)),
+                              child: Center(
+                                child: FittedBox(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      provider.getItems().length == 0
+                                          ? "0"
+                                          : provider
+                                              .getItems()
+                                              .length
+                                              .toString(),
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 22),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                     )),
               )
