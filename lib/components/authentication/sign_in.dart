@@ -224,15 +224,16 @@ class _SignInState extends State<SignIn> {
                     FocusScope.of(context).requestFocus(new FocusNode());
                   },
                   child: Container(
+                    color: Color(0xFF030305),
                     constraints: BoxConstraints(
                         maxHeight: size.height, maxWidth: size.width),
-                    decoration: BoxDecoration(
-                      image: new DecorationImage(
-                        image:
-                            new ExactAssetImage('assets/images/login_bg.png'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                    // decoration: BoxDecoration(
+                    //   image: new DecorationImage(
+                    //     image:
+                    //         new ExactAssetImage('assets/images/login_bg.png'),
+                    //     fit: BoxFit.cover,
+                    //   ),
+                    // ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -271,9 +272,7 @@ class _SignInState extends State<SignIn> {
                           child: Container(
                             width: double.infinity,
                             decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Colors.black, width: 5.0),
-                                color: Colors.black54,
+                                color: Color(0xFF061C56),
                                 borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(60.0),
                                   topRight: Radius.circular(60.0),
@@ -302,7 +301,7 @@ class _SignInState extends State<SignIn> {
                                             color: Colors.blue, width: 2.0),
                                       ),
                                       filled: true,
-                                      fillColor: kBlack,
+                                      fillColor: Colors.black45,
                                       hintStyle: TextStyle(color: kWhite),
                                       hintText: "Enter Email",
                                       prefixIcon: Icon(
@@ -325,7 +324,7 @@ class _SignInState extends State<SignIn> {
                                           borderSide: BorderSide.none,
                                         ),
                                         filled: true,
-                                        fillColor: kBlack,
+                                        fillColor: Colors.black45,
                                         focusedBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               color: Colors.greenAccent,

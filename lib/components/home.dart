@@ -43,7 +43,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             backgroundColor: Colors.transparent,
             elevation: 0.0,
             leading: IconButton(
-                icon: Icon(Icons.logout),
+                icon: Icon(Icons.arrow_back_ios_outlined),
                 onPressed: () {
                   Navigator.pushReplacementNamed(context, "/SignIn");
                 }),
@@ -53,19 +53,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 child: Container(
                     width: 50.0,
                     height: 50.0,
-                    // decoration: BoxDecoration(
-                    //     color: Colors.grey[800],
-                    //     borderRadius: BorderRadius.circular(8)),
                     child: InkWell(
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) => Cart()));
                       },
-                      // child: Center(
-                      //   child: Text(provider.getItems().length == 0
-                      //       ? "0"
-                      //       : provider.getItems().length.toString()),
-                      // ),
                       child: Stack(
                         children: [
                           Positioned(
