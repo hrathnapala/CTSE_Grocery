@@ -46,63 +46,75 @@ class _CartState extends State<Cart> {
               itemBuilder: (context, count) {
                 return Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.3),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    height: width * 0.3,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          height: double.infinity,
-                          width: width * 0.3,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            image: DecorationImage(
-                                image:
-                                    ExactAssetImage(cart[count].item.imageUrl)),
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10.0),
-                              bottomLeft: Radius.circular(10.0),
-                            ),
-                          ),
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "${cart[count].item.name}",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: width * 0.05,
-                                  decoration: TextDecoration.lineThrough),
-                            ),
-                            Text("Rs.${cart[count].amount.toString()}",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: width * 0.035,
-                                )),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: InkWell(
-                            onTap: () {
-                              provider.deleteItem(cart[count]);
-                            },
-                            child: Center(
-                              child: Icon(
-                                Icons.cancel,
-                                size: width * 0.09,
-                                color: Colors.white,
+                  child: GestureDetector(
+                    onTap: () {
+                      provider.toggleComplete(cart[count]);
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: cart[count].isCompleted
+                            ? Colors.red.withOpacity(0.5)
+                            : Colors.grey.withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      height: width * 0.3,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            height: double.infinity,
+                            width: width * 0.3,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              image: DecorationImage(
+                                  image: ExactAssetImage(
+                                      cart[count].item.imageUrl)),
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10.0),
+                                bottomLeft: Radius.circular(10.0),
                               ),
                             ),
                           ),
-                        )
-                      ],
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "${cart[count].item.name}",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: width * 0.05,
+                                    decoration: cart[count].isCompleted
+                                        ? TextDecoration.lineThrough
+                                        : TextDecoration.none),
+                              ),
+                              Text("Rs.${cart[count].amount.toString()}",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: width * 0.035,
+                                      decoration: cart[count].isCompleted
+                                          ? TextDecoration.lineThrough
+                                          : TextDecoration.none)),
+                            ],
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: InkWell(
+                              onTap: () {
+                                provider.deleteItem(cart[count]);
+                              },
+                              child: Center(
+                                child: Icon(
+                                  Icons.cancel,
+                                  size: width * 0.09,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 );

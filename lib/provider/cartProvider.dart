@@ -18,9 +18,10 @@ class CartProvider extends ChangeNotifier {
         _items = [],
         notifyListeners(),
       };
-  // int getAmount() {
-  //   _items.map((e) => amount = e.amount + 1);
-  //   notifyListeners();
-  //   return amount;
-  // }
+  void toggleComplete(CartItems item) => {
+        item.isCompleted = !item.isCompleted,
+        notifyListeners(),
+      };
+  // bool isCheck() => isCompleted;
+
 }

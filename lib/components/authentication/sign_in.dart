@@ -72,25 +72,29 @@ class _SignInState extends State<SignIn> {
                   SizedBox(
                     height: size.height * 0.03,
                   ),
-                  Text(
-                    "Name: " + user.displayName,
-                    style: TextStyle(
-                        color: kWhite,
-                        fontWeight: FontWeight.w900,
-                        fontSize: size.width * 0.05),
+                  FittedBox(
+                    child: Text(
+                      "Name: " + user.displayName,
+                      style: TextStyle(
+                          color: kWhite,
+                          fontWeight: FontWeight.w900,
+                          fontSize: size.width * 0.05),
+                    ),
                   ),
                   SizedBox(
                     height: size.height * 0.01,
                   ),
-                  Text(
-                    "Email: " + user.email,
-                    style: TextStyle(
-                        color: kWhite,
-                        fontWeight: FontWeight.w900,
-                        fontSize: size.width * 0.05),
+                  FittedBox(
+                    child: Text(
+                      "Email: " + user.email,
+                      style: TextStyle(
+                          color: kWhite,
+                          fontWeight: FontWeight.w900,
+                          fontSize: size.width * 0.05),
+                    ),
                   ),
                   SizedBox(
-                    height: size.height * 0.04,
+                    height: size.height * 0.1,
                   ),
                   Text(
                     "Proceed If Details are correct",
@@ -98,9 +102,6 @@ class _SignInState extends State<SignIn> {
                         color: kBlue,
                         fontWeight: FontWeight.w900,
                         fontSize: size.width * 0.04),
-                  ),
-                  SizedBox(
-                    height: size.height * 0.01,
                   ),
                   Container(
                     width: size.width * 0.6,
@@ -151,7 +152,7 @@ class _SignInState extends State<SignIn> {
                     ),
                   ),
                   SizedBox(
-                    height: size.height * 0.03,
+                    height: size.height * 0.06,
                   ),
                   Text(
                     "If Not, Navigate back to login page",
@@ -160,14 +161,11 @@ class _SignInState extends State<SignIn> {
                         fontWeight: FontWeight.w900,
                         fontSize: size.width * 0.04),
                   ),
-                  SizedBox(
-                    height: size.height * 0.01,
-                  ),
                   Container(
                     width: size.width * 0.6,
                     child: ElevatedButton.icon(
                       icon: FaIcon(
-                        FontAwesomeIcons.backward,
+                        FontAwesomeIcons.arrowLeft,
                         color: kRed,
                       ),
                       label: Text(
@@ -224,15 +222,9 @@ class _SignInState extends State<SignIn> {
                     FocusScope.of(context).requestFocus(new FocusNode());
                   },
                   child: Container(
+                    color: Color(0xFF030305),
                     constraints: BoxConstraints(
                         maxHeight: size.height, maxWidth: size.width),
-                    decoration: BoxDecoration(
-                      image: new DecorationImage(
-                        image:
-                            new ExactAssetImage('assets/images/login_bg.png'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -271,9 +263,7 @@ class _SignInState extends State<SignIn> {
                           child: Container(
                             width: double.infinity,
                             decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Colors.black, width: 5.0),
-                                color: Colors.black54,
+                                color: Color(0xFF061C56),
                                 borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(60.0),
                                   topRight: Radius.circular(60.0),
@@ -302,7 +292,7 @@ class _SignInState extends State<SignIn> {
                                             color: Colors.blue, width: 2.0),
                                       ),
                                       filled: true,
-                                      fillColor: kBlack,
+                                      fillColor: Colors.black45,
                                       hintStyle: TextStyle(color: kWhite),
                                       hintText: "Enter Email",
                                       prefixIcon: Icon(
@@ -325,7 +315,7 @@ class _SignInState extends State<SignIn> {
                                           borderSide: BorderSide.none,
                                         ),
                                         filled: true,
-                                        fillColor: kBlack,
+                                        fillColor: Colors.black45,
                                         focusedBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               color: Colors.greenAccent,
@@ -562,6 +552,9 @@ class _SignInState extends State<SignIn> {
                                           shadowColor: kBlue,
                                           elevation: 5.0),
                                     ),
+                                  ),
+                                  SizedBox(
+                                    height: 20.0,
                                   ),
                                   Container(
                                     width: double.infinity,

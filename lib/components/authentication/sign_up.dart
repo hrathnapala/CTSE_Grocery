@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:groceryapp/api/flutterfire.dart';
 import 'package:groceryapp/pallete.dart';
 import 'package:email_validator/email_validator.dart';
@@ -47,12 +48,14 @@ class _SignUpState extends State<SignUp> {
             child: Container(
               constraints:
                   BoxConstraints(maxHeight: size.height, maxWidth: size.width),
-              decoration: BoxDecoration(
-                image: new DecorationImage(
-                  image: new ExactAssetImage('assets/images/register_bg.png'),
-                  fit: BoxFit.cover,
-                ),
-              ),
+              color: Color(0xFF030305),
+
+              // decoration: BoxDecoration(
+              //   image: new DecorationImage(
+              //     image: new ExactAssetImage('assets/images/register_bg.png'),
+              //     fit: BoxFit.cover,
+              //   ),
+              // ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -92,7 +95,7 @@ class _SignUpState extends State<SignUp> {
                       width: double.infinity,
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.black, width: 5.0),
-                          color: Colors.black54,
+                          color: Color(0xFF061C56),
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(60.0),
                             topRight: Radius.circular(60.0),
@@ -119,7 +122,7 @@ class _SignUpState extends State<SignUp> {
                                       color: Colors.blue, width: 2.0),
                                 ),
                                 filled: true,
-                                fillColor: kBlack,
+                                fillColor: Colors.black45,
                                 hintStyle: TextStyle(color: kWhite),
                                 hintText: "Enter Email",
                                 prefixIcon: Icon(
@@ -141,7 +144,7 @@ class _SignUpState extends State<SignUp> {
                                     borderSide: BorderSide.none,
                                   ),
                                   filled: true,
-                                  fillColor: kBlack,
+                                  fillColor: Colors.black45,
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                         color: Colors.greenAccent, width: 2.0),
@@ -191,7 +194,7 @@ class _SignUpState extends State<SignUp> {
                                     borderSide: BorderSide.none,
                                   ),
                                   filled: true,
-                                  fillColor: kBlack,
+                                  fillColor: Colors.black45,
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                         color: Colors.greenAccent, width: 2.0),
@@ -251,7 +254,12 @@ class _SignUpState extends State<SignUp> {
                             ),
                             Container(
                               width: double.infinity,
-                              child: ElevatedButton(
+                              child: ElevatedButton.icon(
+                                icon: FaIcon(
+                                  FontAwesomeIcons.userPlus,
+                                  color: kBlack,
+                                ),
+                                label: Text("Register"),
                                 onPressed: () async {
                                   if (_email.text == "" ||
                                       _password.text == "" ||
@@ -431,12 +439,10 @@ class _SignUpState extends State<SignUp> {
                                     onSurface: Colors.grey,
                                     shadowColor: kBlue,
                                     elevation: 5.0),
-                                child: Text(
-                                  "Register",
-                                  style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.w900),
-                                ),
+                                // child: Text(
+                                //   "Register",
+                                //   style: TextStyle(fontWeight: FontWeight.w900),
+                                // ),
                               ),
                             )
                           ],
