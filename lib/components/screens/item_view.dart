@@ -1,5 +1,6 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:groceryapp/api/flutterfire.dart';
 import 'package:groceryapp/model/cart.dart';
 import 'package:groceryapp/model/data.dart';
 import 'package:groceryapp/provider/cartProvider.dart';
@@ -158,8 +159,11 @@ class _ItemViewState extends State<ItemView> {
                     child: InkWell(
                       onTap: () {
                         if (count > 0) {
-                          provider
-                              .addItem(CartItems(item: item, amount: price));
+                          // provider
+                          //     .addItem(CartItems(item: item, amount: price));
+                          uploadList(CartItems(item: item, amount: price));
+                          getCartItems(provider);
+
                           Navigator.pop(context);
                         } else {
                           Flushbar(
