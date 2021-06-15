@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:groceryapp/api/flutterfire.dart';
 import 'package:groceryapp/components/screens/item_view.dart';
-import 'package:groceryapp/model/data.dart';
 import 'package:groceryapp/provider/cartProvider.dart';
 import 'package:provider/provider.dart';
 

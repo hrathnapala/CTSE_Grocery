@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:groceryapp/api/flutterfire.dart';
 import 'package:groceryapp/components/screens/item_view.dart';
-import 'package:groceryapp/model/data.dart';
 import 'package:groceryapp/provider/cartProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -11,20 +10,6 @@ class Nuts extends StatefulWidget {
 }
 
 class _NutsState extends State<Nuts> {
-  final List<Items> _listItem = [
-    Items(imageUrl: 'assets/images/almond.png', name: "Almond", price: "80"),
-    Items(
-        imageUrl: 'assets/images/pistachios.png',
-        name: "pistachios",
-        price: "100"),
-    Items(imageUrl: 'assets/images/walnut.png', name: "Walnut", price: "180"),
-    Items(imageUrl: 'assets/images/cashew.png', name: "Cashew", price: "100"),
-    Items(imageUrl: 'assets/images/pecans.png', name: "Pecans", price: "120"),
-    Items(
-        imageUrl: 'assets/images/hazelnut.png', name: "Hazelnut", price: "100"),
-    Items(imageUrl: 'assets/images/peanut.png', name: "Peanut", price: "140"),
-  ];
-
   @override
   void initState() {
     super.initState();

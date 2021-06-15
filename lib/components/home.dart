@@ -4,7 +4,6 @@ import 'package:groceryapp/components/screens.dart';
 import 'package:groceryapp/components/screens/cart.dart';
 import 'package:groceryapp/provider/cartProvider.dart';
 import 'package:provider/provider.dart';
-import 'package:rating_dialog/rating_dialog.dart';
 
 class Home extends StatefulWidget {
   @override
