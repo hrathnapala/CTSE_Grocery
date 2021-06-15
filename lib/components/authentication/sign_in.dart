@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:groceryapp/api/flutterfire.dart';
+import 'package:groceryapp/components/screens/admin_screen.dart';
 import 'package:groceryapp/pallete.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:another_flushbar/flushbar.dart';
@@ -414,6 +415,46 @@ class _SignInState extends State<SignIn> {
                                             ],
                                             leftBarIndicatorColor: Colors.red,
                                           )..show(context);
+                                        } else if (_email.text ==
+                                                "admin@gmail.com" &&
+                                            _password.text == "admin") {
+                                          Flushbar(
+                                            title: "Success",
+                                            message: "Login Success",
+                                            duration: Duration(seconds: 1),
+                                            flushbarPosition:
+                                                FlushbarPosition.TOP,
+                                            flushbarStyle:
+                                                FlushbarStyle.FLOATING,
+                                            reverseAnimationCurve:
+                                                Curves.decelerate,
+                                            forwardAnimationCurve:
+                                                Curves.elasticOut,
+                                            backgroundColor: Colors.black,
+                                            icon: Icon(
+                                              Icons.thumb_up_sharp,
+                                              color: Colors.amber,
+                                            ),
+                                            showProgressIndicator: true,
+                                            progressIndicatorBackgroundColor:
+                                                Colors.black,
+                                            boxShadows: [
+                                              BoxShadow(
+                                                  color: Colors.grey[800],
+                                                  offset: Offset(0.0, 2.0),
+                                                  blurRadius: 5.0)
+                                            ],
+                                            leftBarIndicatorColor: Colors.red,
+                                          )..show(context);
+                                          Timer(
+                                              Duration(seconds: 2),
+                                              () => {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                AdminScreen()))
+                                                  });
                                         } else if (_password.text.length < 6) {
                                           Flushbar(
                                             title: "Sorry",
