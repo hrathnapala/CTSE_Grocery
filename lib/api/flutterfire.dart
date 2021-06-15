@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:groceryapp/model/data.dart';
+import 'package:groceryapp/provider/cartProvider.dart';
 
 Future<bool> signIn(String email, String password) async {
   try {
@@ -16,15 +19,23 @@ Future<bool> register(String email, String password) async {
     await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password);
     return true;
-  } on FirebaseAuthException catch (e) {
-    if (e.code == 'weak-password') {
-      print('The password provided is too weak.');
-    } else if (e.code == 'email-already-in-use') {
-      print('The account already exists for that email.');
-    }
-    return false;
   } catch (e) {
     print(e.toString());
     return false;
   }
+}
+
+getFoods(CartProvider cartProvider) async {
+  QuerySnapshot snapshot =
+      await Firestore.instance.collection('Foods').getDocuments();
+  // .orderBy("createdAt", descending: true)
+
+  List<Items> _item = [];
+
+  snapshot.documents.forEach((document) {
+    Items item = Items.fromMap(document.data);
+    _item.add(item);
+  });
+
+  cartProvider.foodList = _item;
 }

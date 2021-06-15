@@ -68,8 +68,8 @@ class _CartState extends State<Cart> {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               image: DecorationImage(
-                                  image: ExactAssetImage(
-                                      cart[count].item.imageUrl)),
+                                  image:
+                                      NetworkImage(cart[count].item.imageUrl)),
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(10.0),
                                 bottomLeft: Radius.circular(10.0),

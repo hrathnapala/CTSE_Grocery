@@ -53,7 +53,7 @@ class _ItemViewState extends State<ItemView> {
                         width: width * 0.4,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                              image: ExactAssetImage(item.imageUrl),
+                              image: NetworkImage(item.imageUrl),
                               fit: BoxFit.cover),
                           borderRadius: BorderRadius.circular(20.0),
                         ),
