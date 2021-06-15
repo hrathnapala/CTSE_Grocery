@@ -58,7 +58,7 @@ class _AdminScreenState extends State<AdminScreen> {
   }
 
   _showImage() {
-    if (_imageFile == null && _imageUrl == null) {
+    if (_imageFile == null) {
       return Text(
         "image placeholder",
         style: TextStyle(color: Colors.white),
@@ -126,7 +126,7 @@ class _AdminScreenState extends State<AdminScreen> {
           filled: true,
           isCollapsed: true,
           hintText: 'Price',
-          contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 12),
+          contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
           hintStyle: TextStyle(color: Colors.white)),
       keyboardType: TextInputType.text,
       style: TextStyle(color: Colors.white),
@@ -134,40 +134,38 @@ class _AdminScreenState extends State<AdminScreen> {
   }
 
   Widget _buildType() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Container(
-        padding: EdgeInsets.only(left: 16.0, right: 16.0),
-        decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey),
-            borderRadius: BorderRadius.circular(15.0)),
-        child: DropdownButton(
-          hint: Text(
-            "Select Food Type",
-            style: TextStyle(color: Colors.white),
-          ),
-          underline: SizedBox(),
-          value: valueChoose,
-          dropdownColor: Colors.grey[300],
-          icon: Icon(Icons.arrow_drop_down),
-          iconSize: 30.0,
-          isExpanded: true,
-          style: TextStyle(fontSize: 16, color: Colors.blue),
-          onChanged: (newValue) {
-            setState(() {
-              valueChoose = newValue;
-            });
-          },
-          items: listItem.map((valueItem) {
-            return DropdownMenuItem(
-              value: valueItem,
-              child: Text(
-                valueItem,
-                style: TextStyle(color: Colors.blue),
-              ),
-            );
-          }).toList(),
+    final width = MediaQuery.of(context).size.width;
+    return Container(
+      padding: EdgeInsets.only(left: 16.0, right: 16.0),
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(15.0)),
+      child: DropdownButton(
+        hint: Text(
+          "Select Food Type",
+          style: TextStyle(color: Colors.white),
         ),
+        underline: SizedBox(),
+        value: valueChoose,
+        dropdownColor: Colors.grey[300],
+        icon: Icon(Icons.arrow_drop_down),
+        iconSize: width * 0.05,
+        isExpanded: true,
+        style: TextStyle(fontSize: width * 0.04, color: Colors.blue),
+        onChanged: (newValue) {
+          setState(() {
+            valueChoose = newValue;
+          });
+        },
+        items: listItem.map((valueItem) {
+          return DropdownMenuItem(
+            value: valueItem,
+            child: Text(
+              valueItem,
+              style: TextStyle(color: Colors.blue),
+            ),
+          );
+        }).toList(),
       ),
     );
   }
@@ -296,33 +294,33 @@ class _AdminScreenState extends State<AdminScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        leading: InkWell(
-            onTap: () {
-              Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => SignIn()));
-            },
-            child: Icon(Icons.arrow_back_ios)),
-        title: Text(
-          'Item Form',
-          style: TextStyle(color: Colors.amber),
+    final width = MediaQuery.of(context).size.width;
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(new FocusNode());
+      },
+      child: Scaffold(
+        key: _scaffoldKey,
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          leading: InkWell(
+              onTap: () {
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (context) => SignIn()));
+              },
+              child: Icon(Icons.arrow_back_ios)),
+          title: Text(
+            'Item Form',
+            style: TextStyle(color: Colors.amber),
+          ),
+          centerTitle: true,
         ),
-        centerTitle: true,
-      ),
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).requestFocus(new FocusNode());
-        },
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height -
-                      MediaQuery.of(context).size.width * 0.2),
-              child: Column(children: [
+        body: SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height * 0.8),
+            child: Column(
+              children: [
                 Expanded(
                   flex: 1,
                   child: Container(
@@ -331,27 +329,71 @@ class _AdminScreenState extends State<AdminScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        _showImage(),
-                        _imageFile == null && _imageUrl == null
-                            ? ButtonTheme(
-                                child: RaisedButton(
-                                  onPressed: () => _getLocalImage(),
-                                  child: Text(
-                                    'Add Image',
-                                    style: TextStyle(color: Colors.white),
+                        _imageFile == null
+                            ? Text(
+                                "image placeholder",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 1.5),
+                              )
+                            : Container(
+                                height: width * 0.3,
+                                width: width * 0.3,
+                                decoration: BoxDecoration(
+                                  color: Colors.amber,
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  child: Image.file(
+                                    _imageFile,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
-                              )
-                            : SizedBox(height: 0),
+                              ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InkWell(
+                            onTap: () {
+                              _getLocalImage();
+                            },
+                            child: Container(
+                              height: width * 0.10,
+                              width: width * 0.5,
+                              decoration: BoxDecoration(
+                                // color: Colors.blue.withOpacity(0.4),
+
+                                border:
+                                    Border.all(color: Colors.blue, width: 3.0),
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              child: Center(
+                                child: FittedBox(
+                                  child: Text(
+                                    _imageFile == null
+                                        ? "Add Image"
+                                        : "Change Image",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        letterSpacing: 2.0,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),
                 ),
                 Expanded(
                   flex: 1,
-                  child: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: double.infinity,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -373,19 +415,116 @@ class _AdminScreenState extends State<AdminScreen> {
                     ),
                   ),
                 ),
-              ]),
+                // Expanded(
+                //   flex: 1,
+                //   child: InkWell(
+                //     onTap: () {
+                //       _saveFood();
+                //     },
+                //     child: Padding(
+                //       padding: const EdgeInsets.all(8.0),
+                //       child: Container(
+                //         width: double.infinity,
+                //         child: Center(
+                //           child: Container(
+                //             // width: width * 0.5,
+                //             height: width * 0.15,
+                //             decoration: BoxDecoration(
+                //                 color: Colors.amber,
+                //                 borderRadius: BorderRadius.circular(10.0)),
+                //             child: Center(
+                //               child: Text(
+                //                 "Save Data",
+                //                 style: TextStyle(
+                //                     color: Colors.black,
+                //                     fontSize: width * 0.05),
+                //               ),
+                //             ),
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+              ],
             ),
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.amber,
-        onPressed: () {
-          FocusScope.of(context).requestFocus(new FocusNode());
-          _saveFood();
-        },
-        child: Icon(Icons.save),
-        foregroundColor: Colors.black,
+        // body: GestureDetector(
+        //   onTap: () {
+        //     FocusScope.of(context).requestFocus(new FocusNode());
+        //   },
+        //   child: SafeArea(
+        //     child: SingleChildScrollView(
+        //       child: ConstrainedBox(
+        //         constraints: BoxConstraints(
+        //             maxHeight: MediaQuery.of(context).size.height -
+        //                 MediaQuery.of(context).size.width * 0.2),
+        //         child: Column(children: [
+        //           Expanded(
+        //             flex: 1,
+        //             child: Container(
+        //               width: double.infinity,
+        //               child: Column(
+        //                 mainAxisAlignment: MainAxisAlignment.center,
+        //                 crossAxisAlignment: CrossAxisAlignment.center,
+        //                 children: [
+        //                   _showImage(),
+        //                   _imageFile == null && _imageUrl == null
+        //                       ? ButtonTheme(
+        //                           child: RaisedButton(
+        //                             onPressed: () => _getLocalImage(),
+        //                             child: Text(
+        //                               'Add Image',
+        //                               style: TextStyle(color: Colors.white),
+        //                             ),
+        //                           ),
+        //                         )
+        //                       : SizedBox(height: 0),
+        //                 ],
+        //               ),
+        //             ),
+        //           ),
+        //           Expanded(
+        //             flex: 1,
+        //             child: Container(
+        //               child: Padding(
+        //                 padding: const EdgeInsets.all(16.0),
+        //                 child: Column(
+        //                   mainAxisAlignment: MainAxisAlignment.start,
+        //                   crossAxisAlignment: CrossAxisAlignment.center,
+        //                   children: [
+        //                     Padding(
+        //                       padding: const EdgeInsets.all(8.0),
+        //                       child: _buildName(),
+        //                     ),
+        //                     Padding(
+        //                       padding: const EdgeInsets.all(8.0),
+        //                       child: _buildPrice(),
+        //                     ),
+        //                     Padding(
+        //                       padding: const EdgeInsets.all(8.0),
+        //                       child: _buildType(),
+        //                     ),
+        //                   ],
+        //                 ),
+        //               ),
+        //             ),
+        //           ),
+        //         ]),
+        //       ),
+        //     ),
+        //   ),
+        // ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.amber,
+          onPressed: () {
+            FocusScope.of(context).requestFocus(new FocusNode());
+            _saveFood();
+          },
+          child: Icon(Icons.save),
+          foregroundColor: Colors.black,
+        ),
       ),
     );
   }
