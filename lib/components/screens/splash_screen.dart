@@ -26,14 +26,22 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
-              Icons.shopping_cart,
-              color: kBlue,
-              size: size.width * 0.3,
+            Container(
+              height: size.width * 0.4,
+              width: size.width * 0.4,
+              decoration: BoxDecoration(
+                color: Colors.amber,
+                image: DecorationImage(
+                    image: ExactAssetImage("assets/images/ShoppingList.png")),
+                borderRadius: BorderRadius.circular(size.width * 0.4),
+              ),
             ),
-            Text(
-              "Happy Shopping",
-              style: TextStyle(color: kWhite, fontSize: size.width * 0.06),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "Happy Shopping",
+                style: TextStyle(color: kWhite, fontSize: size.width * 0.06),
+              ),
             ),
             SizedBox(
               height: size.height * 0.05,

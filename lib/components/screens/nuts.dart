@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:groceryapp/api/flutterfire.dart';
 import 'package:groceryapp/components/screens/item_view.dart';
-import 'package:groceryapp/model/data.dart';
+import 'package:groceryapp/provider/cartProvider.dart';
+import 'package:provider/provider.dart';
 
 class Nuts extends StatefulWidget {
   @override
@@ -8,22 +10,22 @@ class Nuts extends StatefulWidget {
 }
 
 class _NutsState extends State<Nuts> {
-  final List<Items> _listItem = [
-    Items(imageUrl: 'assets/images/almond.png', name: "Almond", price: "80"),
-    Items(
-        imageUrl: 'assets/images/pistachios.png',
-        name: "pistachios",
-        price: "100"),
-    Items(imageUrl: 'assets/images/walnut.png', name: "Walnut", price: "180"),
-    Items(imageUrl: 'assets/images/cashew.png', name: "Cashew", price: "100"),
-    Items(imageUrl: 'assets/images/pecans.png', name: "Pecans", price: "120"),
-    Items(
-        imageUrl: 'assets/images/hazelnut.png', name: "Hazelnut", price: "100"),
-    Items(imageUrl: 'assets/images/peanut.png', name: "Peanut", price: "140"),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    CartProvider foodNotifier =
+        Provider.of<CartProvider>(context, listen: false);
+    getFoods(foodNotifier);
+  }
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    CartProvider foodNotifier = Provider.of<CartProvider>(context);
+    List nuts = foodNotifier
+        .getFoods()
+        .where((element) => element.type == "nuts")
+        .toList();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12.0),
       child: Column(
@@ -33,7 +35,7 @@ class _NutsState extends State<Nuts> {
             crossAxisCount: 2,
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
-            children: _listItem
+            children: nuts
                 .map((item) => GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -49,7 +51,7 @@ class _NutsState extends State<Nuts> {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
                                 image: DecorationImage(
-                                    image: AssetImage(item.imageUrl),
+                                    image: NetworkImage(item.imageUrl),
                                     fit: BoxFit.cover)),
                             child: Container(
                               decoration: BoxDecoration(
@@ -62,12 +64,14 @@ class _NutsState extends State<Nuts> {
                                       ])),
                               child: Align(
                                 alignment: Alignment.bottomCenter,
-                                child: Text(
-                                  item.name,
-                                  style: TextStyle(
-                                      fontSize: 24,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w900),
+                                child: FittedBox(
+                                  child: Text(
+                                    item.name,
+                                    style: TextStyle(
+                                        fontSize: width * 0.05,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w900),
+                                  ),
                                 ),
                               ),
                             )),
