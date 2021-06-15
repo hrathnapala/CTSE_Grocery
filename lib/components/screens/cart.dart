@@ -18,14 +18,6 @@ class _CartState extends State<Cart> {
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      // bottomNavigationBar: Container(
-      //   height: width * 0.15,
-      //   width: double.infinity,
-      //   color: Colors.white,
-      //   child: Center(
-      //     child: Text(provider.getAmount().toString()),
-      //   ),
-      // ),
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text(

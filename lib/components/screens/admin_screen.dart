@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:groceryapp/api/flutterfire.dart';
 import 'package:groceryapp/components/authentication/sign_in.dart';
 import 'package:groceryapp/model/data.dart';
-import 'package:groceryapp/provider/cartProvider.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 import 'package:another_flushbar/flushbar.dart';
 
 class AdminScreen extends StatefulWidget {
@@ -31,23 +29,12 @@ class _AdminScreenState extends State<AdminScreen> {
 
   String valueChoose;
 
-  Items _currentFood;
-  String _imageUrl;
   File _imageFile;
   TextEditingController subingredientController = new TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    CartProvider foodNotifier =
-        Provider.of<CartProvider>(context, listen: false);
-
-    if (foodNotifier.currentFood != null) {
-      _currentFood = foodNotifier.currentFood;
-    } else {
-      _currentFood = Items();
-    }
-    _imageUrl = _currentFood.imageUrl;
   }
 
   @override
@@ -55,39 +42,6 @@ class _AdminScreenState extends State<AdminScreen> {
     super.dispose();
     _name.dispose();
     _price.dispose();
-  }
-
-  _showImage() {
-    if (_imageFile == null) {
-      return Text(
-        "image placeholder",
-        style: TextStyle(color: Colors.white),
-      );
-    } else if (_imageFile != null) {
-      return Stack(
-        alignment: AlignmentDirectional.bottomCenter,
-        children: <Widget>[
-          Image.file(
-            _imageFile,
-            fit: BoxFit.cover,
-          ),
-          ClipRRect(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(15.0),
-                topRight: Radius.circular(15.0)),
-            child: FlatButton(
-              padding: EdgeInsets.all(16),
-              color: Colors.black,
-              child: Text(
-                'Change Image',
-                style: TextStyle(color: Colors.blue),
-              ),
-              onPressed: () => _getLocalImage(),
-            ),
-          )
-        ],
-      );
-    }
   }
 
   _getLocalImage() async {
@@ -362,8 +316,6 @@ class _AdminScreenState extends State<AdminScreen> {
                               height: width * 0.10,
                               width: width * 0.5,
                               decoration: BoxDecoration(
-                                // color: Colors.blue.withOpacity(0.4),
-
                                 border:
                                     Border.all(color: Colors.blue, width: 3.0),
                                 borderRadius: BorderRadius.circular(20.0),
@@ -415,107 +367,10 @@ class _AdminScreenState extends State<AdminScreen> {
                     ),
                   ),
                 ),
-                // Expanded(
-                //   flex: 1,
-                //   child: InkWell(
-                //     onTap: () {
-                //       _saveFood();
-                //     },
-                //     child: Padding(
-                //       padding: const EdgeInsets.all(8.0),
-                //       child: Container(
-                //         width: double.infinity,
-                //         child: Center(
-                //           child: Container(
-                //             // width: width * 0.5,
-                //             height: width * 0.15,
-                //             decoration: BoxDecoration(
-                //                 color: Colors.amber,
-                //                 borderRadius: BorderRadius.circular(10.0)),
-                //             child: Center(
-                //               child: Text(
-                //                 "Save Data",
-                //                 style: TextStyle(
-                //                     color: Colors.black,
-                //                     fontSize: width * 0.05),
-                //               ),
-                //             ),
-                //           ),
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ),
         ),
-        // body: GestureDetector(
-        //   onTap: () {
-        //     FocusScope.of(context).requestFocus(new FocusNode());
-        //   },
-        //   child: SafeArea(
-        //     child: SingleChildScrollView(
-        //       child: ConstrainedBox(
-        //         constraints: BoxConstraints(
-        //             maxHeight: MediaQuery.of(context).size.height -
-        //                 MediaQuery.of(context).size.width * 0.2),
-        //         child: Column(children: [
-        //           Expanded(
-        //             flex: 1,
-        //             child: Container(
-        //               width: double.infinity,
-        //               child: Column(
-        //                 mainAxisAlignment: MainAxisAlignment.center,
-        //                 crossAxisAlignment: CrossAxisAlignment.center,
-        //                 children: [
-        //                   _showImage(),
-        //                   _imageFile == null && _imageUrl == null
-        //                       ? ButtonTheme(
-        //                           child: RaisedButton(
-        //                             onPressed: () => _getLocalImage(),
-        //                             child: Text(
-        //                               'Add Image',
-        //                               style: TextStyle(color: Colors.white),
-        //                             ),
-        //                           ),
-        //                         )
-        //                       : SizedBox(height: 0),
-        //                 ],
-        //               ),
-        //             ),
-        //           ),
-        //           Expanded(
-        //             flex: 1,
-        //             child: Container(
-        //               child: Padding(
-        //                 padding: const EdgeInsets.all(16.0),
-        //                 child: Column(
-        //                   mainAxisAlignment: MainAxisAlignment.start,
-        //                   crossAxisAlignment: CrossAxisAlignment.center,
-        //                   children: [
-        //                     Padding(
-        //                       padding: const EdgeInsets.all(8.0),
-        //                       child: _buildName(),
-        //                     ),
-        //                     Padding(
-        //                       padding: const EdgeInsets.all(8.0),
-        //                       child: _buildPrice(),
-        //                     ),
-        //                     Padding(
-        //                       padding: const EdgeInsets.all(8.0),
-        //                       child: _buildType(),
-        //                     ),
-        //                   ],
-        //                 ),
-        //               ),
-        //             ),
-        //           ),
-        //         ]),
-        //       ),
-        //     ),
-        //   ),
-        // ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.amber,
           onPressed: () {

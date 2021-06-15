@@ -49,13 +49,6 @@ class _SignUpState extends State<SignUp> {
               constraints:
                   BoxConstraints(maxHeight: size.height, maxWidth: size.width),
               color: Color(0xFF030305),
-
-              // decoration: BoxDecoration(
-              //   image: new DecorationImage(
-              //     image: new ExactAssetImage('assets/images/register_bg.png'),
-              //     fit: BoxFit.cover,
-              //   ),
-              // ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -439,10 +432,6 @@ class _SignUpState extends State<SignUp> {
                                     onSurface: Colors.grey,
                                     shadowColor: kBlue,
                                     elevation: 5.0),
-                                // child: Text(
-                                //   "Register",
-                                //   style: TextStyle(fontWeight: FontWeight.w900),
-                                // ),
                               ),
                             )
                           ],

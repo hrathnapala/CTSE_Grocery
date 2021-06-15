@@ -33,8 +33,6 @@ Future<bool> register(String email, String password) async {
 getFoods(CartProvider cartProvider) async {
   QuerySnapshot snapshot =
       await Firestore.instance.collection('Foods').getDocuments();
-  // .orderBy("createdAt", descending: true)
-
   List<Items> _item = [];
 
   snapshot.documents.forEach((document) {
@@ -83,23 +81,9 @@ _uploadFood(Items food, {String imageUrl}) async {
     food.imageUrl = imageUrl;
   }
 
-  // if (isUpdating) {
-  //   // food.updatedAt = Timestamp.now();
-
-  //   // await foodRef.document(food.id).updateData(food.toMap());
-
-  //   foodUploaded(food);
-  //   // print('updated food with id: ${food.id}');
-  // } else {
-  // food.createdAt = Timestamp.now();
-
   DocumentReference documentRef = await foodRef.add(food.toMap());
-
-  // food.id = documentRef.documentID;
 
   print('uploaded food successfully: ${food.toString()}');
 
   await documentRef.setData(food.toMap(), merge: true);
-
-  // }
 }
