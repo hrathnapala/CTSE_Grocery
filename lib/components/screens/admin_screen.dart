@@ -19,9 +19,17 @@ class AdminScreen extends StatefulWidget {
 class _AdminScreenState extends State<AdminScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final _name = TextEditingController();
-  final _price = TextEditingController();
-  final _type = TextEditingController();
+  TextEditingController _name = TextEditingController();
+  TextEditingController _price = TextEditingController();
+
+  List listItem = [
+    "fruit",
+    "vegetable",
+    "nuts",
+    "dairy",
+  ];
+
+  String valueChoose;
 
   Items _currentFood;
   String _imageUrl;
@@ -47,7 +55,6 @@ class _AdminScreenState extends State<AdminScreen> {
     super.dispose();
     _name.dispose();
     _price.dispose();
-    _type.dispose();
   }
 
   _showImage() {
@@ -57,52 +64,26 @@ class _AdminScreenState extends State<AdminScreen> {
         style: TextStyle(color: Colors.white),
       );
     } else if (_imageFile != null) {
-      print('showing image from local file');
-
       return Stack(
         alignment: AlignmentDirectional.bottomCenter,
         children: <Widget>[
           Image.file(
             _imageFile,
             fit: BoxFit.cover,
-            height: 250,
           ),
-          FlatButton(
-            padding: EdgeInsets.all(16),
-            color: Colors.blue,
-            child: Text(
-              'Change Image',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22,
-                  fontWeight: FontWeight.w400),
+          ClipRRect(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.0),
+                topRight: Radius.circular(15.0)),
+            child: FlatButton(
+              padding: EdgeInsets.all(16),
+              color: Colors.black,
+              child: Text(
+                'Change Image',
+                style: TextStyle(color: Colors.blue),
+              ),
+              onPressed: () => _getLocalImage(),
             ),
-            onPressed: () => _getLocalImage(),
-          )
-        ],
-      );
-    } else if (_imageUrl != null) {
-      print('showing image from url');
-      return Stack(
-        alignment: AlignmentDirectional.bottomCenter,
-        children: <Widget>[
-          Image.network(
-            _imageUrl,
-            width: MediaQuery.of(context).size.width,
-            fit: BoxFit.cover,
-            height: 250,
-          ),
-          FlatButton(
-            padding: EdgeInsets.all(16),
-            color: Colors.yellow,
-            child: Text(
-              'Change Image',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22,
-                  fontWeight: FontWeight.w400),
-            ),
-            onPressed: () => _getLocalImage(),
           )
         ],
       );
@@ -110,12 +91,12 @@ class _AdminScreenState extends State<AdminScreen> {
   }
 
   _getLocalImage() async {
-    File imageFile = await ImagePicker.pickImage(
-        source: ImageSource.gallery, imageQuality: 50, maxWidth: 400);
+    final pickedFile =
+        await ImagePicker().getImage(source: ImageSource.gallery);
 
-    if (imageFile != null) {
+    if (pickedFile != null) {
       setState(() {
-        _imageFile = imageFile;
+        _imageFile = File(pickedFile.path);
       });
     }
   }
@@ -123,50 +104,76 @@ class _AdminScreenState extends State<AdminScreen> {
   Widget _buildName() {
     return TextField(
       controller: _name,
+      autofocus: false,
       decoration: InputDecoration(
           fillColor: Colors.white30,
           filled: true,
           isCollapsed: true,
           hintText: 'Name',
-          contentPadding: EdgeInsets.fromLTRB(5, 5, 0, 5),
+          contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 12),
           hintStyle: TextStyle(color: Colors.white)),
       keyboardType: TextInputType.text,
-      style: TextStyle(fontSize: 20, color: Colors.white),
+      style: TextStyle(color: Colors.white),
     );
   }
 
   Widget _buildPrice() {
     return TextField(
       controller: _price,
+      autofocus: false,
       decoration: InputDecoration(
           fillColor: Colors.white30,
           filled: true,
           isCollapsed: true,
           hintText: 'Price',
-          contentPadding: EdgeInsets.fromLTRB(5, 5, 0, 5),
+          contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 12),
           hintStyle: TextStyle(color: Colors.white)),
       keyboardType: TextInputType.text,
-      style: TextStyle(fontSize: 20, color: Colors.white),
+      style: TextStyle(color: Colors.white),
     );
   }
 
   Widget _buildType() {
-    return TextField(
-      controller: _type,
-      decoration: InputDecoration(
-          fillColor: Colors.white30,
-          filled: true,
-          isCollapsed: true,
-          contentPadding: EdgeInsets.fromLTRB(5, 5, 0, 5),
-          hintText: 'fruit/vegetable/nuts/dairy',
-          hintStyle: TextStyle(color: Colors.white)),
-      keyboardType: TextInputType.text,
-      style: TextStyle(fontSize: 20, color: Colors.white),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Container(
+        padding: EdgeInsets.only(left: 16.0, right: 16.0),
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey),
+            borderRadius: BorderRadius.circular(15.0)),
+        child: DropdownButton(
+          hint: Text(
+            "Select Food Type",
+            style: TextStyle(color: Colors.white),
+          ),
+          underline: SizedBox(),
+          value: valueChoose,
+          dropdownColor: Colors.grey[300],
+          icon: Icon(Icons.arrow_drop_down),
+          iconSize: 30.0,
+          isExpanded: true,
+          style: TextStyle(fontSize: 16, color: Colors.blue),
+          onChanged: (newValue) {
+            setState(() {
+              valueChoose = newValue;
+            });
+          },
+          items: listItem.map((valueItem) {
+            return DropdownMenuItem(
+              value: valueItem,
+              child: Text(
+                valueItem,
+                style: TextStyle(color: Colors.blue),
+              ),
+            );
+          }).toList(),
+        ),
+      ),
     );
   }
 
   _saveFood() {
-    if (_name.text == "" || _price.text == "" || _type.text == "") {
+    if (_name.text == "" || _price.text == "") {
       Flushbar(
         title: "Sorry",
         message: "Empty Fields",
@@ -188,13 +195,10 @@ class _AdminScreenState extends State<AdminScreen> {
         ],
         leftBarIndicatorColor: Colors.red,
       )..show(context);
-    } else if (_type.text != "fruit" ||
-        _type.text != "vegetable" ||
-        _type.text != "nuts" ||
-        _type.text != "dairy") {
+    } else if (valueChoose == "" || valueChoose == null) {
       Flushbar(
         title: "Sorry",
-        message: "Wrong food type ",
+        message: "Please choose an item type from the dropdown",
         duration: Duration(seconds: 3),
         flushbarPosition: FlushbarPosition.TOP,
         flushbarStyle: FlushbarStyle.FLOATING,
@@ -238,7 +242,8 @@ class _AdminScreenState extends State<AdminScreen> {
     } else {
       try {
         uploadFoodAndImage(
-            Items(name: "Apple", price: "800", type: "fruit"), _imageFile);
+            Items(name: _name.text, price: _price.text, type: valueChoose),
+            _imageFile);
         setState(() {
           _imageFile = null;
         });
@@ -302,63 +307,77 @@ class _AdminScreenState extends State<AdminScreen> {
             },
             child: Icon(Icons.arrow_back_ios)),
         title: Text(
-          'Food Form',
+          'Item Form',
           style: TextStyle(color: Colors.amber),
         ),
         centerTitle: true,
       ),
-      body: Column(children: [
-        Expanded(
-          flex: 1,
-          child: Container(
-            width: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _showImage(),
-                _imageFile == null && _imageUrl == null
-                    ? ButtonTheme(
-                        child: RaisedButton(
-                          onPressed: () => _getLocalImage(),
-                          child: Text(
-                            'Add Image',
-                            style: TextStyle(color: Colors.white),
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).size.width * 0.2),
+              child: Column(children: [
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        _showImage(),
+                        _imageFile == null && _imageUrl == null
+                            ? ButtonTheme(
+                                child: RaisedButton(
+                                  onPressed: () => _getLocalImage(),
+                                  child: Text(
+                                    'Add Image',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              )
+                            : SizedBox(height: 0),
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: _buildName(),
                           ),
-                        ),
-                      )
-                    : SizedBox(height: 0),
-              ],
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: _buildPrice(),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: _buildType(),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ]),
             ),
           ),
         ),
-        Expanded(
-          flex: 1,
-          child: Container(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: _buildName(),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: _buildPrice(),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: _buildType(),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ]),
+      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.amber,
         onPressed: () {
