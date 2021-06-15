@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:groceryapp/components/screens/cart.dart';
+import 'package:groceryapp/model/cart.dart';
 import 'package:groceryapp/model/data.dart';
 import 'package:groceryapp/provider/cartProvider.dart';
 import 'package:path/path.dart' as path;
@@ -75,7 +77,6 @@ uploadFoodAndImage(Items food, File localFile) async {
 
 _uploadFood(Items food, {String imageUrl}) async {
   CollectionReference foodRef = Firestore.instance.collection('Foods');
-  CartProvider cartProvider;
 
   if (imageUrl != null) {
     food.imageUrl = imageUrl;
@@ -86,4 +87,36 @@ _uploadFood(Items food, {String imageUrl}) async {
   print('uploaded food successfully: ${food.toString()}');
 
   await documentRef.setData(food.toMap(), merge: true);
+}
+
+updateFood(Items food) async {
+  CollectionReference foodRef = Firestore.instance.collection('Foods');
+  await foodRef.document(food.name).updateData(food.toMap());
+}
+
+uploadList(CartItems food) async {
+  CollectionReference foodRef = Firestore.instance.collection('Cart');
+
+  DocumentReference documentRef = await foodRef.add(food.toMap());
+
+  print('uploaded food successfully: ${food.toString()}');
+
+  await documentRef.setData(food.toMap(), merge: true);
+}
+
+getCartItems(CartProvider cartProvider) async {
+  QuerySnapshot snapshot =
+      await Firestore.instance.collection('Cart').getDocuments();
+  List<CartItems> _item = [];
+
+  snapshot.documents.forEach((document) {
+    CartItems item = CartItems.fromMap(document.data);
+    _item.add(item);
+  });
+
+  cartProvider.setCart = _item;
+}
+
+deleteFood(CartItems food) async {
+  await Firestore.instance.collection('Cart').document(food.item.name).delete();
 }

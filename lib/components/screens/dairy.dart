@@ -16,6 +16,7 @@ class _DairyState extends State<Dairy> {
     CartProvider foodNotifier =
         Provider.of<CartProvider>(context, listen: false);
     getFoods(foodNotifier);
+    getCartItems(foodNotifier);
   }
 
   @override
