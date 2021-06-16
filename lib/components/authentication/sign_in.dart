@@ -10,6 +10,7 @@ import 'package:groceryapp/pallete.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:groceryapp/components/screens/qa.dart';
+import 'package:groceryapp/components/screens/contact_us.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -640,7 +641,25 @@ class _SignInState extends State<SignIn> {
                                                   builder: (context) => QA()));
                                         },
                                         child: Text(
-                                          "Help / Contact Us",
+                                          "Help",
+                                          style: TextStyle(
+                                            color: kBlue,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 10.0,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ContactUs()));
+                                        },
+                                        child: Text(
+                                          "Contact Us",
                                           style: TextStyle(
                                             color: kBlue,
                                           ),
