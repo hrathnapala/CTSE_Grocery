@@ -9,6 +9,7 @@ import 'package:groceryapp/components/screens/admin_screen.dart';
 import 'package:groceryapp/pallete.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:another_flushbar/flushbar.dart';
+import 'package:groceryapp/components/screens/qa.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -598,6 +599,7 @@ class _SignInState extends State<SignIn> {
                                     height: 20.0,
                                   ),
                                   Container(
+                                    padding: EdgeInsets.only(bottom: 16.0),
                                     width: double.infinity,
                                     child: ElevatedButton.icon(
                                       icon: FaIcon(
@@ -626,7 +628,26 @@ class _SignInState extends State<SignIn> {
                                           shadowColor: kRed,
                                           elevation: 5.0),
                                     ),
-                                  )
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => QA()));
+                                        },
+                                        child: Text(
+                                          "Help / Contact Us",
+                                          style: TextStyle(
+                                            color: kBlue,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ],
                               ),
                             ),
