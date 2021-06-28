@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:groceryapp/api/flutterfire.dart';
 import 'package:groceryapp/model/cart.dart';
 import 'package:groceryapp/model/data.dart';
 
@@ -21,11 +22,6 @@ class CartProvider extends ChangeNotifier {
   }
 
   void deleteItem(CartItems item) async {
-    print(item.item.name);
-    await Firestore.instance
-        .collection('Cart')
-        .document(item.item.name)
-        .delete();
     _items.remove(item);
     notifyListeners();
   }
@@ -36,6 +32,7 @@ class CartProvider extends ChangeNotifier {
       };
   void toggleComplete(CartItems item) => {
         item.isCompleted = !item.isCompleted,
+        toggleFood(item),
         notifyListeners(),
       };
 
@@ -60,6 +57,7 @@ class CartProvider extends ChangeNotifier {
 
   deleteFood(Items food) async {
     foods.removeWhere((_food) => _food.name == food.name);
+    deleteFood(food);
     notifyListeners();
   }
 }

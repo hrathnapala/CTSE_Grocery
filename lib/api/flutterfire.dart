@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:groceryapp/components/screens/cart.dart';
 import 'package:groceryapp/model/cart.dart';
 import 'package:groceryapp/model/data.dart';
 import 'package:groceryapp/provider/cartProvider.dart';
 import 'package:path/path.dart' as path;
+import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 Future<bool> signIn(String email, String password) async {
@@ -117,6 +117,36 @@ getCartItems(CartProvider cartProvider) async {
   cartProvider.setCart = _item;
 }
 
-deleteFood(CartItems food) async {
-  await Firestore.instance.collection('Cart').document(food.item.name).delete();
+deleteFood(CartItems item, CartProvider provider) async {
+  Firestore.instance
+      .collection("Cart")
+      .where("id", isEqualTo: item.id)
+      .getDocuments()
+      .then((value) {
+    value.documents.forEach((element) {
+      Firestore.instance
+          .collection("Cart")
+          .document(element.documentID)
+          .delete()
+          .then((value) {
+        provider.deleteItem(item);
+      });
+    });
+  });
+}
+
+toggleFood(CartItems food) {
+  Firestore.instance
+      .collection("Cart")
+      .where("id", isEqualTo: food.id)
+      .getDocuments()
+      .then((value) {
+    value.documents.forEach((element) {
+      Firestore.instance
+          .collection("Cart")
+          .document(element.documentID)
+          .updateData(food.toMap())
+          .then((value) {});
+    });
+  });
 }
