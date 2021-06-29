@@ -89,11 +89,6 @@ _uploadFood(Items food, {String imageUrl}) async {
   await documentRef.setData(food.toMap(), merge: true);
 }
 
-updateFood(Items food) async {
-  CollectionReference foodRef = Firestore.instance.collection('Foods');
-  await foodRef.document(food.name).updateData(food.toMap());
-}
-
 uploadList(CartItems food) async {
   CollectionReference foodRef = Firestore.instance.collection('Cart');
 
