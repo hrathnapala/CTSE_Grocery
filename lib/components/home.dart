@@ -29,7 +29,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    final provider = Provider.of<CartProvider>(context, listen: false);
+    final provider = Provider.of<CartProvider>(context);
     return SafeArea(
       child: Scaffold(
           backgroundColor: Colors.black,

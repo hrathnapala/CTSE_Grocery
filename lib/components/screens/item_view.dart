@@ -1,9 +1,12 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:groceryapp/api/flutterfire.dart';
 import 'package:groceryapp/model/cart.dart';
 import 'package:groceryapp/model/data.dart';
 import 'package:groceryapp/provider/cartProvider.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
+import 'package:uuid/uuid_util.dart';
 
 class ItemView extends StatefulWidget {
   final Items item;
@@ -16,6 +19,16 @@ class ItemView extends StatefulWidget {
 
 class _ItemViewState extends State<ItemView> {
   int count = 0;
+
+  var uuid;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      uuid = Uuid();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -158,8 +171,12 @@ class _ItemViewState extends State<ItemView> {
                     child: InkWell(
                       onTap: () {
                         if (count > 0) {
-                          provider
-                              .addItem(CartItems(item: item, amount: price));
+                          // provider.addItem(CartItems(
+                          //     id: uuid.v4(), item: item, amount: price));
+                          uploadList(CartItems(
+                              id: uuid.v4(), item: item, amount: price));
+                          getCartItems(provider);
+
                           Navigator.pop(context);
                         } else {
                           Flushbar(

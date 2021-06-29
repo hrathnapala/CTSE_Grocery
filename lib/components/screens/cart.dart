@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:groceryapp/api/flutterfire.dart';
 import 'package:groceryapp/model/cart.dart';
 import 'package:groceryapp/provider/cartProvider.dart';
 import 'package:provider/provider.dart';
@@ -94,7 +95,9 @@ class _CartState extends State<Cart> {
                                 const EdgeInsets.symmetric(horizontal: 8.0),
                             child: InkWell(
                               onTap: () {
-                                provider.deleteItem(cart[count]);
+                                // provider.deleteItem(cart[count]);
+                                deleteFood(cart[count], provider);
+                                // print('done');
                               },
                               child: Center(
                                 child: Icon(
